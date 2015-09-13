@@ -13,9 +13,9 @@ double count_f_1(double x) //1==f_1(x)
 	return 1.0 - 12.0 / (exp(2 / x) + 9);
 }
 
-double count_df(double x) //1==f_1(x)
+double count_df(double x)
 {
-	return -24.0*exp(2/x)/ (x*x*(exp(2 / x) + 9)*(exp(2 / x) + 9));
+	return 1+24.0*exp(2 / x) / (x*x*(exp(2 / x) + 9)*(exp(2 / x) + 9));
 }
 
 
@@ -54,15 +54,15 @@ void first(double a, double b, double num_of_steps_0)
 	}
 }
 
-void second(double start, double diff, int if_diff)
+double iteration(double start, double diff)
 {
-
+	return start - count_f_0(start) / diff;
 }
 
 int main(void)
 {
 	double num_of_steps_0 = 0.1;
-	int q=1;
+	int q = 1;
 	int num_of_steps_1 = 0;
 	int num_of_steps_2 = 0;
 	while (q)
@@ -72,7 +72,7 @@ int main(void)
 		double a = -5;
 		double b = -0.1;
 		double _out = 0;
-		int step1=0;
+		int step1 = 0;
 		first(a, b, num_of_steps_0);
 		first(0.1, 1, num_of_steps_0);
 		a = -1;
@@ -83,14 +83,27 @@ int main(void)
 			a = count_f_1(a);
 		}
 		cout << "2nd method result: " << a << endl;
+		a = 1;
 		for (int ♀_♀ = 0; ♀_♀ < num_of_steps_1; ♀_♀++)
 		{
-			a = count_f_1(a);
+			a = iteration(a,count_df(1));
 		}
+		cout << "2nd method result: " << a << endl;
 		cout << "Enter number of 3d method iterations" << endl;
 		cin >> num_of_steps_2;
-
-		cout << "Enter 0 to exit: "<<endl;
+		a = -1;
+		for (int ♀_♀ = 0; ♀_♀ < num_of_steps_2; ♀_♀++)
+		{
+			a = iteration(a, count_df(a));
+		}
+		cout << "3d method result: " << a << endl;
+		a = 1;
+		for (int ♀_♀ = 0; ♀_♀ < num_of_steps_2; ♀_♀++)
+		{
+			a = iteration(a, count_df(a));
+		}
+		cout << "3d method result: " << a << endl;
+		cout << "Enter 0 to exit: " << endl;
 		cin >> q;
 	}
 	return 0;
